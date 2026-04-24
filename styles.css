@@ -66,7 +66,7 @@ main,
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.55rem 1rem;
+  padding: 1.56rem 2.1rem;
   margin-top: 0.8rem;
   border: 1px solid var(--surface-border);
   border-radius: 999px;
@@ -136,6 +136,12 @@ main,
   padding: 0.45rem 0.9rem;
   font: inherit;
   cursor: pointer;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
 }
 
 .nav a {
@@ -220,7 +226,7 @@ main,
 .hero {
   min-height: 72vh;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1.05fr 0.95fr;
   align-items: center;
   gap: 1rem;
   will-change: transform;
@@ -294,15 +300,114 @@ h1 span {
   text-transform: uppercase;
 }
 
-.hero-stats {
+.hero-art {
+  min-height: 390px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.8rem;
-  margin-top: 0.3rem;
-  grid-column: 1 / -1;
+  place-items: center;
 }
 
-.hero-stats article,
+.hero-photo-core {
+  width: 78%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(239, 229, 207, 0.45);
+  overflow: hidden;
+  box-shadow: 0 0 35px rgba(239, 229, 207, 0.18);
+}
+
+.hero-photo-core img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.logo-orbit {
+  position: relative;
+  width: min(98%, 560px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+
+.logo-core {
+  width: 52%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(239, 229, 207, 0.45);
+  background: rgba(22, 24, 30, 0.75);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  box-shadow: 0 0 35px rgba(239, 229, 207, 0.14);
+  gap: 0;
+}
+
+.logo-core-mark {
+  display: block;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2.1rem, 6vw, 3.5rem);
+  line-height: 0.8;
+  margin-bottom: 0;
+}
+
+.logo-core-sub {
+  display: block;
+  margin-top: 0;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1;
+}
+
+.orbit-text {
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  border: 1px solid rgba(239, 229, 207, 0.25);
+  animation: orbitSpin 20s linear infinite;
+  pointer-events: none;
+}
+
+.orbit-text--two {
+  inset: 10%;
+  animation-duration: 14s;
+  animation-direction: reverse;
+  border-color: rgba(239, 229, 207, 0.16);
+}
+
+.orbit-text svg {
+  width: 100%;
+  height: 100%;
+}
+
+.orbit-text text {
+  font-size: 0.3rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(239, 229, 207, 0.82);
+  fill: rgba(239, 229, 207, 0.82);
+}
+
+.orbit-text--two text {
+  fill: rgba(239, 229, 207, 0.65);
+}
+
+@keyframes orbitSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .glass-card,
 .price-card,
 .media-card,
@@ -312,20 +417,6 @@ h1 span {
   backdrop-filter: blur(10px);
   border-radius: 1rem;
   box-shadow: 0 12px 34px var(--shadow);
-}
-
-.hero-stats article {
-  padding: 1rem;
-}
-
-.hero-stats h3 {
-  margin: 0;
-  font-size: 1.6rem;
-}
-
-.hero-stats p {
-  margin: 0.2rem 0 0;
-  color: var(--muted);
 }
 
 .section {
@@ -522,6 +613,7 @@ h2 {
   transform: translateZ(0);
   transition: transform 0.24s ease, box-shadow 0.24s ease;
   user-select: none;
+  position: relative;
 }
 
 .result-card img {
@@ -530,13 +622,37 @@ h2 {
   object-fit: cover;
   display: block;
   pointer-events: none;
+  filter: blur(6.2px) brightness(0.5);
+  transform: scale(1.08);
 }
 
 .result-card figcaption {
-  padding: 0.72rem 0.78rem 0.86rem;
-  color: var(--muted);
-  font-size: 0.86rem;
-  line-height: 1.4;
+  position: absolute;
+  top: 0.8rem;
+  left: 0.85rem;
+  right: 0.85rem;
+  padding: 0;
+  color: #f3efe4;
+  font-size: 1.06rem;
+  font-weight: 600;
+  line-height: 1.35;
+  z-index: 2;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.65);
+}
+
+.result-view-btn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  min-width: 128px;
+  pointer-events: auto;
+}
+
+.result-view-btn:hover,
+.result-view-btn:focus-visible {
+  transform: translate(-50%, -50%);
 }
 
 .result-card:hover {
@@ -634,7 +750,7 @@ h2 {
   width: max-content;
   gap: 1.7rem;
   padding: 0.72rem 1rem;
-  animation: marquee 22s linear infinite;
+  animation: marquee 16s linear infinite;
 }
 
 .ticker-track span {
@@ -650,7 +766,7 @@ h2 {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(-49.5%);
   }
 }
 
@@ -677,22 +793,87 @@ h2 {
 }
 
 .contacts {
-  margin-top: 1rem;
+  margin-top: 0.2rem;
 }
 
 .contact-actions {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   flex-wrap: wrap;
   gap: 0.8rem;
 }
 
+.contact-actions .btn {
+  width: 320px;
+  max-width: 100%;
+  min-height: 52px;
+}
+
+.contacts-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.contacts-left {
+  display: grid;
+  align-content: start;
+  gap: 0.9rem;
+}
+
+.contacts-left .section-head {
+  margin-bottom: 0.5rem;
+}
+
+.callback-card {
+  border: 1px solid var(--surface-border);
+  background: var(--surface);
+  border-radius: 1rem;
+  box-shadow: 0 12px 34px var(--shadow);
+  padding: 1.35rem;
+  display: grid;
+  gap: 0.7rem;
+  align-content: start;
+  min-height: 100%;
+}
+
+.callback-card h3 {
+  margin: 0 0 0.15rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 2rem;
+}
+
+.callback-card input {
+  width: 100%;
+  min-height: 46px;
+  border-radius: 0.75rem;
+  border: 1px solid var(--surface-border);
+  background: rgba(0, 0, 0, 0.14);
+  color: var(--text);
+  padding: 0.72rem 0.8rem;
+  font: inherit;
+}
+
+.callback-card .btn,
+.callback-card .btn:hover,
+.callback-card .btn:focus-visible {
+  transform: none;
+}
+
+.callback-card .btn::before {
+  display: none;
+}
+
 .booking {
-  margin-top: 1.6rem;
+  margin-top: 0.6rem;
   padding: 1.5rem;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
   align-items: center;
+  width: 100%;
 }
 
 .booking p {
@@ -739,40 +920,131 @@ h2 {
   transition: transform 0.18s ease;
 }
 
-.cursor-glow {
+.cursor-glow { display: none; }
+
+.lightbox {
   position: fixed;
-  width: 320px;
-  height: 320px;
+  inset: 0;
+  background: rgba(7, 8, 12, 0.86);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+  padding: 1.2rem;
+}
+
+.lightbox.open {
+  display: flex;
+}
+
+.lightbox-image {
+  max-width: min(92vw, 1100px);
+  max-height: 86vh;
+  border-radius: 0.8rem;
+  border: 1px solid var(--surface-border);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.2rem;
+  height: 2.2rem;
   border-radius: 50%;
-  pointer-events: none;
-  background: radial-gradient(circle, rgba(239, 229, 207, 0.15) 0%, transparent 65%);
-  transform: translate(-50%, -50%);
-  mix-blend-mode: screen;
-  z-index: 0;
+  border: 1px solid var(--surface-border);
+  background: rgba(20, 22, 28, 0.84);
+  color: var(--accent);
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
 }
 
 @media (max-width: 900px) {
   .menu-toggle {
     display: inline-flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
   }
 
   .nav {
-    display: none;
+    display: flex;
     position: absolute;
-    top: calc(100% + 0.6rem);
-    left: 0;
-    right: 0;
-    padding: 0.8rem;
+    top: calc(100% + 0.5rem);
+    left: 0.35rem;
+    right: 0.35rem;
+    padding: 0.9rem;
     border: 1px solid var(--surface-border);
     border-radius: 1rem;
-    background: rgba(36, 37, 42, 0.96);
-    backdrop-filter: blur(12px);
+    background: #24262c;
     flex-direction: column;
-    gap: 0.7rem;
+    gap: 0.55rem;
+    align-items: center;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: max-height 0.35s ease, opacity 0.25s ease, transform 0.25s ease;
+    z-index: 30;
   }
 
   .nav.open {
-    display: flex;
+    max-height: 520px;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .nav a {
+    position: relative;
+    overflow: hidden;
+    width: min(88%, 320px);
+    min-height: 46px;
+    border-radius: 999px;
+    border: 1px solid rgba(239, 229, 207, 0.3);
+    background: #2b2d34;
+    color: var(--text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.02rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .nav a::before {
+    content: "";
+    position: absolute;
+    top: -120%;
+    left: -35%;
+    width: 24%;
+    height: 320%;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.48) 48%,
+      transparent 100%
+    );
+    transform: rotate(22deg);
+    opacity: 0;
+  }
+
+  .nav a:hover::before,
+  .nav a:focus-visible::before {
+    opacity: 1;
+    animation: shine 1.1s linear 1;
+  }
+
+  .header .btn--small {
+    padding: 0.5rem 0.9rem;
+    min-height: 2.5rem;
+    white-space: nowrap;
   }
 
   .about-grid,
@@ -782,6 +1054,39 @@ h2 {
   .reviews-media-grid,
   .results-grid {
     grid-template-columns: 1fr;
+  }
+
+  .contacts-layout {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .contacts-left {
+    align-content: start;
+  }
+
+  .callback-card {
+    min-height: auto;
+    align-content: start;
+  }
+
+  .reviews-media-grid {
+    gap: 0.7rem;
+    justify-items: center;
+  }
+
+  .review-media-card {
+    max-width: 360px;
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  .review-media-card img {
+    aspect-ratio: 16 / 10;
+  }
+
+  .contact-actions .btn {
+    width: 100%;
   }
 
   .price-card,
@@ -807,6 +1112,10 @@ h2 {
     padding-top: 0.3rem;
   }
 
+  .hero-art {
+    min-height: 260px;
+  }
+
   h1 {
     max-width: none;
   }
@@ -815,13 +1124,15 @@ h2 {
     animation-duration: 28s;
   }
 
-  .hero-stats {
-    grid-template-columns: 1fr;
-  }
-
   .booking {
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
+    margin-top: 0.45rem;
+  }
+
+  .result-view-btn {
+    min-width: 118px;
   }
 }
 
@@ -846,7 +1157,9 @@ h2 {
   }
 
   .ticker-track,
-  .logo-mark i {
+  .logo-mark i,
+  .orbit-text,
+  .orbit-text {
     animation: none;
   }
 

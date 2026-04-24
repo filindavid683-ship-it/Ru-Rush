@@ -2,17 +2,6 @@ const revealItems = document.querySelectorAll(".reveal");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const spotlightCards = document.querySelectorAll(".spotlight");
 
-if (!reduceMotion) {
-  const glow = document.createElement("div");
-  glow.className = "cursor-glow";
-  document.body.appendChild(glow);
-
-  window.addEventListener("pointermove", (event) => {
-    glow.style.left = `${event.clientX}px`;
-    glow.style.top = `${event.clientY}px`;
-  });
-}
-
 if (reduceMotion) {
   revealItems.forEach((item) => item.classList.add("active"));
 } else {
@@ -197,4 +186,53 @@ if (carousel) {
   rebuildDots();
   updateCarousel();
   startAutoplay();
+}
+
+const lightbox = document.querySelector("#lightbox");
+const lightboxImage = lightbox?.querySelector(".lightbox-image");
+const lightboxClose = lightbox?.querySelector(".lightbox-close");
+const viewButtons = document.querySelectorAll(".result-view-btn");
+
+const closeLightbox = () => {
+  if (!lightbox || !lightboxImage) return;
+  lightbox.classList.remove("open");
+  lightbox.setAttribute("aria-hidden", "true");
+  lightboxImage.src = "";
+  lightboxImage.alt = "";
+};
+
+if (lightbox && lightboxImage) {
+  viewButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const card = button.closest(".result-card");
+      const image = card?.querySelector("img");
+      if (!image) return;
+      lightboxImage.src = image.src;
+      lightboxImage.alt = image.alt || "Фото работы";
+      lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
+    });
+  });
+
+  lightboxClose?.addEventListener("click", closeLightbox);
+  lightbox.addEventListener("click", (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeLightbox();
+  });
+}
+
+const callbackForm = document.querySelector("#callback-form");
+
+if (callbackForm) {
+  callbackForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const name = callbackForm.querySelector("input[name='name']")?.value?.trim() || "";
+    const phone = callbackForm.querySelector("input[name='phone']")?.value?.trim() || "";
+    if (!name || !phone) return;
+    callbackForm.reset();
+    alert("Спасибо! Заявка отправлена, мы скоро свяжемся с вами.");
+  });
 }
