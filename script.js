@@ -192,6 +192,7 @@ const lightbox = document.querySelector("#lightbox");
 const lightboxImage = lightbox?.querySelector(".lightbox-image");
 const lightboxClose = lightbox?.querySelector(".lightbox-close");
 const viewButtons = document.querySelectorAll(".result-view-btn");
+const resultCards = document.querySelectorAll(".result-card");
 
 const closeLightbox = () => {
   if (!lightbox || !lightboxImage) return;
@@ -201,16 +202,27 @@ const closeLightbox = () => {
   lightboxImage.alt = "";
 };
 
+const openLightboxFromCard = (card) => {
+  if (!lightbox || !lightboxImage || !card) return;
+  const image = card.querySelector("img");
+  if (!image) return;
+  lightboxImage.src = image.src;
+  lightboxImage.alt = image.alt || "Фото работы";
+  lightbox.classList.add("open");
+  lightbox.setAttribute("aria-hidden", "false");
+};
+
 if (lightbox && lightboxImage) {
   viewButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const card = button.closest(".result-card");
-      const image = card?.querySelector("img");
-      if (!image) return;
-      lightboxImage.src = image.src;
-      lightboxImage.alt = image.alt || "Фото работы";
-      lightbox.classList.add("open");
-      lightbox.setAttribute("aria-hidden", "false");
+      openLightboxFromCard(card);
+    });
+  });
+
+  resultCards.forEach((card) => {
+    card.addEventListener("click", () => {
+      openLightboxFromCard(card);
     });
   });
 
@@ -225,6 +237,28 @@ if (lightbox && lightboxImage) {
 }
 
 const callbackForm = document.querySelector("#callback-form");
+const callbackModal = document.querySelector("#callback-modal");
+const openCallbackModalBtn = document.querySelector("#open-callback-modal");
+const closeCallbackModalBtn = document.querySelector("#close-callback-modal");
+
+const openCallbackModal = () => {
+  if (!callbackModal) return;
+  callbackModal.classList.add("open");
+  callbackModal.setAttribute("aria-hidden", "false");
+};
+
+const closeCallbackModal = () => {
+  if (!callbackModal) return;
+  callbackModal.classList.remove("open");
+  callbackModal.setAttribute("aria-hidden", "true");
+};
+
+openCallbackModalBtn?.addEventListener("click", openCallbackModal);
+closeCallbackModalBtn?.addEventListener("click", closeCallbackModal);
+
+callbackModal?.addEventListener("click", (event) => {
+  if (event.target === callbackModal) closeCallbackModal();
+});
 
 if (callbackForm) {
   callbackForm.addEventListener("submit", (event) => {
@@ -233,6 +267,13 @@ if (callbackForm) {
     const phone = callbackForm.querySelector("input[name='phone']")?.value?.trim() || "";
     if (!name || !phone) return;
     callbackForm.reset();
+    closeCallbackModal();
     alert("Спасибо! Заявка отправлена, мы скоро свяжемся с вами.");
   });
 }
+
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeCallbackModal();
+  }
+});
